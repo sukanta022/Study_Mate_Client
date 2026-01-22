@@ -1,0 +1,48 @@
+import React from 'react';
+import { FaStar } from "react-icons/fa";
+import { Link } from 'react-router';
+const Partner = () => {
+    return (
+        <div className='bg-[#171F3F] space-y-4 md:space-y-5 p-6 rounded-3xl border-2 border-[#202751] shadow-xl'>
+            <div className='flex gap-4'>
+                <img src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className='w-15 h-15 rounded-full'/>
+
+                <div className='space-y-1'>
+                    <p className='text-2xl font-semibold text-white'>Emily Rodriguez</p>
+
+                    <div className='text-[#FBBF25] flex justify-start items-center gap-2'>
+                        <p><FaStar /></p>
+                        <p>4.9</p>
+                        <p className='text-primary'>(127 reviews)</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div className='text-primary flex flex-col gap-2'>
+                <p className='text-xl font-semibold'>Subject</p>
+
+                <div className='flex gap-3'>
+                    <p className='bg-[#262D62] py-1 px-3 w-fit rounded-3xl'>English Literature</p>
+
+                    <p className='bg-[#262D62] py-1 px-3 w-fit rounded-3xl'>Mathematics</p>
+                </div>
+
+                
+            </div>
+
+            <div className='text-primary flex flex-col gap-1'>
+                <p className='text-xl font-semibold'>Skills</p>
+
+                <p className='text-[#A8D5E1]'>Essay Writing, Literary Analysis, Research Papers, Citation Formats</p>
+
+            </div>
+
+            <div>
+                <Link className="btn w-full linear-bg text-white text-xl font-bold rounded-lg border-0">View Profile</Link>
+            </div>
+        </div>
+    );
+};
+
+export default Partner;
