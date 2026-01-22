@@ -9,6 +9,10 @@
   @apply bg-gradient-to-br from-[#632EE3] to-[#9F62F2];
 }
 
+.linear-bg-process {
+  @apply bg-gradient-to-br from-[#632EE3] via-[#9F62F2] to-[#A156F6];
+}
+
 .gradient-text {
   @apply bg-gradient-to-br from-[#632EE3] via-[#9F62F2] to-[#9D58F6] bg-clip-text text-transparent;
 }
