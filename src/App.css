@@ -9,9 +9,6 @@
   @apply bg-gradient-to-br from-[#632EE3] to-[#9F62F2];
 }
 
-.linear-bg-process {
-  @apply bg-gradient-to-br from-[#632EE3] via-[#9F62F2] to-[#A156F6];
-}
 
 .gradient-text {
   @apply bg-gradient-to-br from-[#632EE3] via-[#9F62F2] to-[#9D58F6] bg-clip-text text-transparent;
@@ -22,5 +19,10 @@
 }
 
 .btn-primary {
-  @apply linear-bg text-white text-2xl py-3 px-6 font-bold rounded-4xl
+  @apply  text-white text-2xl py-3 px-6 font-bold rounded-4xl
+}
+
+
+.input-style {
+  @apply bg-[#0F172A] text-white border-[#262D62] focus:border-[#9F62F2] focus:outline-none
 }

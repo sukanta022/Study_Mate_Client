@@ -6,7 +6,7 @@ const Header = () => {
     const navList = <>
         <li><NavLink>Home</NavLink></li>
         <li><NavLink>Find Partners </NavLink></li>
-        <li><NavLink>Create Partner Profile</NavLink></li>
+        <li><NavLink to={'/CreateProfile'}>Create Partner Profile</NavLink></li>
         <li><NavLink>My Connections</NavLink></li>
     </>
 
