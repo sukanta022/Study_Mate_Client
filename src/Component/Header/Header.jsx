@@ -5,14 +5,14 @@ import { IoMdLogOut } from "react-icons/io";
 const Header = () => {
     const navList = <>
         <li><NavLink>Home</NavLink></li>
-        <li><NavLink>Find Partners </NavLink></li>
+        <li><NavLink to={'/FindPartners'}>Find Partners </NavLink></li>
         <li><NavLink to={'/CreateProfile'}>Create Partner Profile</NavLink></li>
-        <li><NavLink>My Connections</NavLink></li>
+        <li><NavLink to={'/MyConnection'}>My Connections</NavLink></li>
     </>
 
     const profileView = (
         <>
-            <li><Link >Profile</Link></li>
+            <li><Link to={'/profile'}>Profile</Link></li>
             <li>
             <button className="flex items-center gap-2">
                 Logout <IoMdLogOut />
