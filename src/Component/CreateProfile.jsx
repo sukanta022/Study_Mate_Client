@@ -31,7 +31,7 @@ const CreateProfile = () => {
             <h1 className='text-white text-4xl md:text-5xl lg:text-6xl font-bold'>Create Partner Profile</h1>
             <p className='text-primary text-xl'>Share your expertise and connect with fellow students</p>
 
-            <form className="bg-[#131B34] p-6 md:p-10 rounded-3xl border-2 border-[#202751] space-y-6 w-full max-w-5xl" onSubmit={handleSubmit}>
+            <form className="bg-[#131B34]  border-2 border-[#202751] p-6 md:p-10 rounded-3xl space-y-6 w-full max-w-5xl" onSubmit={handleSubmit}>
   
                 {/* Row 1 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
