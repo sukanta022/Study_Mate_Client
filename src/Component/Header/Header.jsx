@@ -14,8 +14,13 @@ const Header = () => {
     const navList = <>
         <li><NavLink>Home</NavLink></li>
         <li><NavLink to={'/FindPartners'}>Find Partners </NavLink></li>
-        <li><NavLink to={'/CreateProfile'}>Create Partner Profile</NavLink></li>
-        <li><NavLink to={'/MyConnection'}>My Connections</NavLink></li>
+        {
+            user && <>
+                <li><NavLink to={'/CreateProfile'}>Create Partner Profile</NavLink></li>
+                <li><NavLink to={'/MyConnection'}>My Connections</NavLink></li>
+            </>
+        }
+        
     </>
 
     const profileView = (

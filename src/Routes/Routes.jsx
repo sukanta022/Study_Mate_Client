@@ -8,6 +8,7 @@ import FindPartner from "../Pages/FindPartner";
 import MyConnections from "../Pages/MyConnections";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import PrivateRoute from "./PrivateRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +20,8 @@ export const router = createBrowserRouter([
         },
         {
           path: '/CreateProfile',
-          Component: CreateProfile
+          Component: CreateProfile,
+          element: <PrivateRoute>  <CreateProfile></CreateProfile> </PrivateRoute>
         },
         {
           path: '/profile',
@@ -31,11 +33,12 @@ export const router = createBrowserRouter([
         },
         {
           path: '/MyConnection',
-          Component: MyConnections
+          element: <PrivateRoute> <MyConnections></MyConnections> </PrivateRoute>
         },
         {
           path: '/login',
-          Component: Login
+          Component: Login,
+          
         },
         {
           path: '/register',
