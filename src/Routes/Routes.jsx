@@ -9,6 +9,7 @@ import MyConnections from "../Pages/MyConnections";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import PrivateRoute from "./PrivateRoute";
+import ViewProfile from "../Pages/viewProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/MyConnection',
+          loader: () => fetch("http://localhost:3000/users"),
           element: <PrivateRoute> <MyConnections></MyConnections> </PrivateRoute>
         },
         {
@@ -43,6 +45,11 @@ export const router = createBrowserRouter([
         {
           path: '/register',
           Component: Register
+        },
+        {
+          path: '/Profile/:id',
+          loader : ({params}) => fetch(`http://localhost:3000/users/${params.id}`),
+          Component: ViewProfile
         }
     ]
   },

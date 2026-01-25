@@ -21,7 +21,8 @@ const CreateProfile = () => {
         const created_at = new Date().toISOString();
         const patnerCount = 0
         const rating = 0
-        const profile = {name,email,profileimage,subject,studyMode,experienceLevel,location,language,availabilityTime,expertise,about,created_at, patnerCount, rating}
+        const partner = []
+        const profile = {name,email,profileimage,subject,studyMode,experienceLevel,location,language,availabilityTime,expertise,about,created_at, patnerCount, rating,partner}
 
         console.log(profile)
 

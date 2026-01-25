@@ -2,6 +2,7 @@ import React, { use, useEffect, useRef, useState } from 'react';
 import { FaStar } from "react-icons/fa";
 import { AuthContext } from '../context/AuthContext';
 import useAxios from '../hooks/useAxios';
+import { Link } from 'react-router';
 
 const Profile = () => {
     const profileUpdateModal = useRef(null)
@@ -16,11 +17,15 @@ const Profile = () => {
         
     },[axiosInstace,user,loading])
 
-    if (loading || userProfile.length === 0) {
+    
+
+    if (loading ) {
         return <div className="min-h-screen bg-[#0F172A] text-white flex justify-center items-center">
             Loading profile...
         </div>
     }
+
+    console.log(userProfile.length)
     
     const updateModal = () => {
         profileUpdateModal.current.showModal()
@@ -47,19 +52,22 @@ const Profile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#0F172A] flex justify-center items-start py-16 px-4">
-            <div className="bg-[#131B34] border-2 border-[#202751] rounded-3xl p-8 md:p-12 w-full max-w-4xl text-white space-y-8">
+        <div className="min-h-screen bg-[#0F172A] flex justify-center items-center py-16 px-4">
+            {
+                userProfile.length === 0 ? 
+                    <Link className='btn linear-bg text-xl font-bold text-white rounded-lg border-0' to={'/createProfile'}>Create Your Profile</Link> :
+                    <div className="bg-[#131B34] border-2 border-[#202751] rounded-3xl p-8 md:p-12 w-full max-w-4xl text-white space-y-8">
 
                 {/* Top Section */}
                 <div className="flex flex-col md:flex-row gap-6 items-center">
                     <img 
-                        src={userProfile[0].profileimage} 
+                        src={userProfile[0]?.profileimage} 
                         alt="profile" 
                         className="w-32 h-32 rounded-full object-cover border-4 border-[#9F62F2]"
                     />
 
                     <div className="text-center md:text-left space-y-2">
-                        <h1 className="text-3xl font-bold">{userProfile[0].name}</h1>
+                        <h1 className="text-3xl font-bold">{userProfile[0]?.name}</h1>
                         <p className="text-primary">{userProfile[0].email}</p>
 
                         <div className="flex justify-center md:justify-start items-center gap-2 text-[#FBBF25]">
@@ -126,10 +134,13 @@ const Profile = () => {
                     </button>
                 </div>
 
-            </div>
+                    </div>
 
+            }
 
-            //profile update modal
+            {
+                userProfile.length !== 0 &&
+                //profile update modal
             <dialog ref={profileUpdateModal}  className="modal">
                 <div className="modal-box bg-[#131B34] border-2 border-[#202751] max-w-2xl">
                     
@@ -192,6 +203,12 @@ const Profile = () => {
                 </div>
             </dialog>
 
+            }
+            
+            
+
+
+            
         </div>
     );
 };
