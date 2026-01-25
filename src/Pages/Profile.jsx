@@ -1,12 +1,12 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import { FaStar } from "react-icons/fa";
 import { AuthContext } from '../context/AuthContext';
 import useAxios from '../hooks/useAxios';
 
 const Profile = () => {
-
+    const profileUpdateModal = useRef(null)
+    const axiosInstace = useAxios();
     const {user,loading} = use(AuthContext)
-    const axiosInstace = useAxios()
     const [userProfile, setUserProfile] = useState([])
     useEffect(() => {
         if(!loading){
@@ -22,6 +22,29 @@ const Profile = () => {
         </div>
     }
     
+    const updateModal = () => {
+        profileUpdateModal.current.showModal()
+    }
+    
+    const handleProfileUpdate = async(e) => {
+        e.preventDefault()
+        const name = e.target.name.value;
+        const subject = e.target.subject.value.split(",");
+        const studyMode = e.target.studyMode.value;
+        const experienceLevel = e.target.experienceLevel.value;
+        const availabilityTime = e.target.availabilityTime.value;
+        const about = e.target.about.value;
+        const profile = {name,subject,studyMode,experienceLevel,availabilityTime,about}
+        console.log(profile)
+        axiosInstace.patch(`/users/${userProfile[0]._id}`, profile)
+        .then(res => {
+            console.log("Updated", res.data)
+            
+            profileUpdateModal.current.close()
+            window.location.reload();
+
+        })
+    }
 
     return (
         <div className="min-h-screen bg-[#0F172A] flex justify-center items-start py-16 px-4">
@@ -92,17 +115,83 @@ const Profile = () => {
                 {/* About */}
                 <div className="space-y-2">
                     <h2 className="text-2xl font-semibold">About Me</h2>
-                    <p className="text-[#A8D5E1]">{userProfile[0].about}</p>
+                    <p className="text-[#A8D5E1]">{userProfile[0].about_you}</p>
                 </div>
 
                 {/* Action */}
                 <div className="flex justify-end">
-                    <button className="btn linear-bg border-0 text-white text-lg px-8">
+                    <button className="btn linear-bg border-0 text-white text-lg px-8"
+                    onClick={() => updateModal()}>
                         Update Profile
                     </button>
                 </div>
 
             </div>
+
+
+            //profile update modal
+            <dialog ref={profileUpdateModal}  className="modal">
+                <div className="modal-box bg-[#131B34] border-2 border-[#202751] max-w-2xl">
+                    
+                    <h3 className="font-bold text-2xl text-white mb-6">Update Profile</h3>
+
+                    <form className="space-y-4" onSubmit={handleProfileUpdate}>
+
+                        {/* Name */}
+                        <fieldset className="fieldset">
+                            <label className="text-white label">Name</label>
+                            <input type="text" name='name' defaultValue={userProfile[0].name}className="input input-info bg-[#0F172A] text-white border-[#262D62] w-full"/>
+                        </fieldset>
+
+                        {/* Subject */}
+                        <fieldset className="fieldset">
+                            <label className="text-white label">Subjects</label>
+                            <input type="text" name='subject' defaultValue={userProfile[0].subject}placeholder="Math, Physics" className="input input-info bg-[#0F172A] text-white border-[#262D62] w-full"/>
+                        </fieldset>
+
+                        {/* Study Mode (Dropdown) */}
+                        <fieldset className="fieldset">
+                            <label className="text-white label">Study Mode</label>
+                            <select name='studyMode' defaultValue={userProfile[0].studyMode} className="select bg-[#0F172A] text-white border-[#262D62] w-full">
+                                <option>Online</option>
+                                <option>Offline</option>
+                                <option>Hybrid</option>
+                            </select>
+                        </fieldset>
+
+                        {/* Experience Level (Dropdown) */}
+                        <fieldset className="fieldset">
+                            <label className="text-white label">Experience Level</label>
+                            <select name='experienceLevel' defaultValue={userProfile[0].experienceLevel}
+                            className="select bg-[#0F172A] text-white border-[#262D62] w-full">
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </fieldset>
+
+                        {/* Availability */}
+                        <fieldset className="fieldset">
+                            <label className="text-white label">Availability</label>
+                            <input type="text" name="availabilityTime"  defaultValue={userProfile[0].availabilityTime}className="input input-info bg-[#0F172A] text-white border-[#262D62] w-full"/>
+                        </fieldset>
+
+                        {/* About */}
+                        <fieldset className="fieldset">
+                            <label className="text-white label">About</label>
+                            <textarea name='about' defaultValue={userProfile[0].about_you} className="textarea textarea-info bg-[#0F172A] text-white border-[#262D62] w-full"/>
+                        </fieldset>
+
+                        {/* Buttons */}
+                        <div className="flex justify-end gap-3 pt-4">
+                            
+                            <button  className="btn linear-bg border-0 text-white">Save Changes</button>
+                        </div>
+
+                    </form>
+                </div>
+            </dialog>
+
         </div>
     );
 };
