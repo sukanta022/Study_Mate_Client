@@ -6,7 +6,7 @@ const Partner = ({user}) => {
     const handleBidOpen = () => {
         bidModalRef.current.showModal()
     }
-    const {name, profileimage, subject, studyMode, availabilityTime, location, experienceLevel, rating, patnerCount, email, expertise, about_you,created_at} = user
+    const {name, profileimage, subject, studyMode, availabilityTime, location, experienceLevel, rating, patnerCount, email, expertise, about_you} = user
     return (
         <div className='bg-[#171F3F] space-y-4 md:space-y-5 p-6 rounded-3xl border-2 border-[#202751] shadow-xl'>
             <div className='flex gap-4'>

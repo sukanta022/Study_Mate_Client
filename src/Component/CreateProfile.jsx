@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { use } from 'react';
+import useAxios from '../hooks/useAxios';
+import { AuthContext } from '../context/AuthContext';
 
 const CreateProfile = () => {
-
+    const axiosInstace = useAxios()
+    const {user} = use(AuthContext)
     const handleSubmit = (e) => {
         e.preventDefault()
         const name = e.target.name.value;
+        const profileimage = user.photoURL
         const email = e.target.email.value;
-        const subject = e.target.subject.value;
+        const subject = e.target.subject.value.split(",");
         const studyMode = e.target.studyMode.value;
         const experienceLevel = e.target.experienceLevel.value;
         const location = e.target.location.value;
@@ -14,9 +18,15 @@ const CreateProfile = () => {
         const availabilityTime = e.target.availabilityTime.value;
         const expertise = e.target.expertise.value;
         const about = e.target.about.value;
-        const profile = {name,email,subject,studyMode,experienceLevel,location,language,availabilityTime,expertise,about}
+        const created_at = new Date().toISOString();
+        const patnerCount = 0
+        const rating = 0
+        const profile = {name,email,profileimage,subject,studyMode,experienceLevel,location,language,availabilityTime,expertise,about,created_at, patnerCount, rating}
 
         console.log(profile)
+
+        axiosInstace.post('/users', profile)
+        .then(data => console.log(data))
 
         e.target.reset()
     }
@@ -37,12 +47,12 @@ const CreateProfile = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <fieldset className="fieldset">
                         <label className="text-white label">Full Name</label> 
-                        <input type="text" name="name" placeholder="Enter your full name" className="input input-info bg-[#0F172A] text-white border-[#262D62] focus:border-[#9F62F2] focus:outline-none w-full" />
+                        <input type="text" defaultValue={user?.displayName} name="name" placeholder="Enter your full name" className="input input-info bg-[#0F172A] text-white border-[#262D62] focus:border-[#9F62F2] focus:outline-none w-full" />
                     </fieldset>
 
                     <fieldset className="fieldset">
                         <label className="text-white label">Contact Email</label>
-                        <input type="email"  name="email" placeholder="your.email@example.com" className="input input-info bg-[#0F172A] text-white border-[#262D62] focus:border-[#9F62F2] focus:outline-none w-full" />
+                        <input type="email" defaultValue={user?.email} readOnly name="email" placeholder="your.email@example.com" className="input input-info bg-[#0F172A] text-white border-[#262D62] focus:border-[#9F62F2] focus:outline-none w-full" />
                     </fieldset>
                 </div>
 
