@@ -3,6 +3,7 @@ import { useLoaderData } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 import { MdDelete } from "react-icons/md";
 import useAxios from '../hooks/useAxios';
+import Swal from 'sweetalert2';
 const MyConnections = () => {
     const usersData = useLoaderData()
     const [allPartner, setAllPartner] = useState([])
@@ -18,17 +19,34 @@ const MyConnections = () => {
         }
     },[user,usersData])
 
-    const handleDeletePartner = (id, email) => {
+    const handleDeletePartner = async(id, email) => {
         console.log(id,email)
-        axiosInstace.patch(`/users/id/${id}/disconnect`, {requestPartner : user.email})
-        .then(res => console.log("1",res))
+        try{
+            await axiosInstace.patch(`/users/id/${id}/disconnect`, {requestPartner : user.email}).then(res => console.log("1",res))
 
+            await axiosInstace.patch(`/users/email/${user.email}/disconnect`, {partner : email}).then(res => console.log("2", res))
 
-        axiosInstace.patch(`/users/email/${user.email}/disconnect`, {partner : email})
-        .then(res => console.log("2", res))
+            Swal.fire({
+                title: "Deleted!",
+                text: "Partner has been deleted successfully.",
+                icon: "success"
+            });
 
-        setAllPartner(prev => prev.filter(p => p.email !== email));
-        alert("Delete")
+            setAllPartner(prev => prev.filter(p => p.email !== email));
+        }
+
+        catch(error){
+            console.log(error)
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!"
+                    
+                });
+        }
+
+        
+        
     }
     
    

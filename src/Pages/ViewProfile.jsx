@@ -1,27 +1,48 @@
-import { use } from "react";
+import { use, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import useAxios from "../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const ViewProfile = () => {
     const {user} = use(AuthContext)
     const axiosInstace = useAxios()
     const userProfile = useLoaderData()
     const {_id,name,rating,email,about_you,subject = [],expertise,experienceLevel,availabilityTime,patnerCount,image,requestPartner} = userProfile || {};
+    const[isConnected, setIsConnected] = useState(requestPartner?.includes(user.email))
 
-    const handleUpdatePartner = () => {
-        if(requestPartner.includes(user.email)){
-            alert("Already added ")
-            return
+    const handleUpdatePartner = async() => {
+
+        try{
+            await axiosInstace.patch(`/users/id/${_id}/connect`, {requestPartner : user.email}).then(res => console.log("1",res))
+            
+            await axiosInstace.patch(`/users/email/${user.email}/connect`, {partner : email})
+            .then(res => console.log("2", res))
+
+            setIsConnected(true)
+
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Partner added to your connection",
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
-        axiosInstace.patch(`/users/id/${_id}/connect`, {requestPartner : user.email})
-        .then(res => console.log("1",res))
-
-        axiosInstace.patch(`/users/email/${user.email}/connect`, {partner : email})
-        .then(res => console.log("2", res))
+        
+        
+        catch(error){
+            console.log(error)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!"           
+            });
+        }
+        
     }
-    console.log(userProfile.patnerCount)
+    
     return (
         <div className="flex justify-center items-center bg-[#0F172A] min-h-screen p-5">
             <div className="bg-[#1E293B] p-10 space-y-6 rounded-xl w-full max-w-5xl mx-auto  border-4 border-[#202751] shadow-2xl">
@@ -91,8 +112,8 @@ const ViewProfile = () => {
                 </div>
             </div>
 
-            <button className='btn border-0 linear-bg w-full text-xl text-white font-semibold' onClick={() => handleUpdatePartner()}>
-                Connect With {name}
+            <button disabled={isConnected} className='btn border-0 linear-bg w-full text-xl text-white font-semibold' onClick={() => handleUpdatePartner()}>
+                 {isConnected? "Already Addeded" : `Connect With ${name}`}   
             </button>
         </div>
         </div>
