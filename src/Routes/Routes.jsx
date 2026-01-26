@@ -1,4 +1,3 @@
-
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Home from "../Pages/Home";
@@ -9,11 +8,14 @@ import MyConnections from "../Pages/MyConnections";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import PrivateRoute from "./PrivateRoute";
-import ViewProfile from "../Pages/viewProfile";
+import ViewProfile from "../Pages/ViewProfile";
+import ErrorPage from "../Pages/ErrorPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement: ErrorPage,
     children: [
         {
             index: true,
@@ -50,7 +52,11 @@ export const router = createBrowserRouter([
           path: '/Profile/:id',
           loader : ({params}) => fetch(`http://localhost:3000/users/${params.id}`),
           Component: ViewProfile
-        }
+        },
+        {
+        path: '*',
+        Component: ErrorPage
+      }
     ]
   },
   
