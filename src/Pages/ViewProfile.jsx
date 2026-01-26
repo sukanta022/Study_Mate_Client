@@ -9,13 +9,16 @@ const ViewProfile = () => {
     const {user} = use(AuthContext)
     const axiosInstace = useAxios()
     const userProfile = useLoaderData()
-    const {_id,name,rating,email,about_you,subject = [],expertise,experienceLevel,availabilityTime,patnerCount,image,requestPartner} = userProfile || {};
+    const {_id,name,rating,email,about_you,subject = [],expertise,experienceLevel,availabilityTime,partnerCount,image,requestPartner} = userProfile || {};
     const[isConnected, setIsConnected] = useState(requestPartner?.includes(user.email))
-
+    const[partnerCountUpdate, setPartnerCountUpdate] = useState(partnerCount)
     const handleUpdatePartner = async() => {
 
         try{
-            await axiosInstace.patch(`/users/id/${_id}/connect`, {requestPartner : user.email}).then(res => console.log("1",res))
+            await axiosInstace.patch(`/users/id/${_id}/connect`, {requestPartner : user.email}).then(res => {
+                console.log("1",res)
+                setPartnerCountUpdate(partnerCountUpdate+1)
+            })
             
             await axiosInstace.patch(`/users/email/${user.email}/connect`, {partner : email})
             .then(res => console.log("2", res))
@@ -108,7 +111,7 @@ const ViewProfile = () => {
 
                 <div>
                     <p className='text-xl font-semibold text-white'>Connected With</p>
-                    <p className='text-[#A8D5E1] text-center'>{patnerCount}</p>
+                    <p className='text-[#A8D5E1] text-center'>{partnerCountUpdate}</p>
                 </div>
             </div>
 

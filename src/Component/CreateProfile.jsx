@@ -1,10 +1,16 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import useAxios from '../hooks/useAxios';
 import { AuthContext } from '../context/AuthContext';
+import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const CreateProfile = () => {
     const axiosInstace = useAxios()
+    const userData = useLoaderData()
     const {user} = use(AuthContext)
+    const isUserCreatedProfile = userData.some(u => u.email === user.email)
+    
+    const [userCreatedProfile, setUserCreatedProfile] = useState(isUserCreatedProfile)
     const handleSubmit = (e) => {
         e.preventDefault()
         const name = e.target.name.value;
@@ -19,15 +25,23 @@ const CreateProfile = () => {
         const expertise = e.target.expertise.value;
         const about = e.target.about.value;
         const created_at = new Date().toISOString();
-        const patnerCount = 0
+        const partnerCount = 0
         const rating = 0
         const partner = []
-        const profile = {name,email,profileimage,subject,studyMode,experienceLevel,location,language,availabilityTime,expertise,about,created_at, patnerCount, rating,partner}
+        const profile = {name,email,profileimage,subject,studyMode,experienceLevel,location,language,availabilityTime,expertise,about,created_at, partnerCount, rating,partner}
 
         console.log(profile)
 
         axiosInstace.post('/users', profile)
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            setUserCreatedProfile(true)
+            Swal.fire({
+                title: "Profile created successfully",
+                icon: "success",
+                draggable: true
+            });
+        })
 
         e.target.reset()
     }
@@ -120,7 +134,7 @@ const CreateProfile = () => {
 
                 {/* Buttons */}
                 <div className="flex flex-col md:flex-row gap-4">
-                    <button className="btn linear-bg border-0 w-full md:w-3/4 text-white font-semibold text-xl rounded-xl">Create Profile</button>
+                    <button disabled={userCreatedProfile} className="btn linear-bg border-0 w-full md:w-3/4 text-white font-semibold text-xl rounded-xl"> {userCreatedProfile? "Profile is created already" : "Create Profile"}</button>
                     <button onClick={() => handleClear()} className="btn w-full md:w-1/4 bg-[#2A3148] text-white font-semibold text-xl rounded-xl">Clear</button>
                 </div>
 

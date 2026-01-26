@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/CreateProfile',
-          Component: CreateProfile,
+          loader: () => fetch("http://localhost:3000/users"),
           element: <PrivateRoute>  <CreateProfile></CreateProfile> </PrivateRoute>
         },
         {
