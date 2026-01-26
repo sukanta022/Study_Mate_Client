@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/CreateProfile',
-          loader: () => fetch("http://localhost:3000/users"),
+          loader: () => fetch("https://study-mate-server-khaki.vercel.app/users"),
           element: <PrivateRoute>  <CreateProfile></CreateProfile> </PrivateRoute>
         },
         {
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/MyConnection',
-          loader: () => fetch("http://localhost:3000/users"),
+          loader: () => fetch("https://study-mate-server-khaki.vercel.app/users"),
           element: <PrivateRoute> <MyConnections></MyConnections> </PrivateRoute>
         },
         {
@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/Profile/:id',
-          loader : ({params}) => fetch(`http://localhost:3000/users/${params.id}`),
+          loader : ({params}) => fetch(`https://study-mate-server-khaki.vercel.app/users/${params.id}`),
           element: <PrivateRoute> <ViewProfile></ViewProfile> </PrivateRoute>
         },
         {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 
 const axiosInstace = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://study-mate-server-khaki.vercel.app'
 })
 
 const useAxios = () => {
