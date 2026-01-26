@@ -6,6 +6,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 import { AuthContext } from '../context/AuthContext';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [error, setError] = useState('')
@@ -35,10 +37,16 @@ const Login = () => {
         signInUser(email,password)
         .then(() =>{
             setSuccess(true)
-            
+            toast.success("Login Successfully")
             navigate(`${location.state ? location.state : "/"}`)
         } )
-        .catch(error => setError(error.message))
+        .catch(error =>{
+            Swal.fire({
+                icon: "error",
+                title: error.message,
+                text: "Something went wrong!",
+            });
+        } )
 
     }
 
@@ -49,11 +57,17 @@ const Login = () => {
         .then((data) => {
             console.log(data)
             setSuccess(true)
+            toast.success("Login Successfully")
             navigate(`${location.state ? location.state : "/"}`)
         })
         .catch((error) => {
             console.log(error)
             setError(error.message)
+            Swal.fire({
+                icon: "error",
+                title: error.message,
+                text: "Something went wrong!",
+            });
         })
     }
 
