@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { FaStar } from "react-icons/fa";
 import { Link } from 'react-router';
 const Partner = ({user}) => {
     
-    const {name, _id, profileimage, subject, studyMode, availabilityTime, location, experienceLevel, rating, patnerCount, email, expertise, about_you} = user
+    const {name, _id, profileimage, subject, rating, expertise} = user
     return (
         <div className='bg-[#171F3F] space-y-4 md:space-y-5 p-6 rounded-3xl border-2 border-[#202751] shadow-xl'>
             <div className='flex gap-4'>
-                <img src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className='w-15 h-15 rounded-full'/>
+                <img src={profileimage} alt="" className='w-15 h-15 rounded-full'/>
 
                 <div className='space-y-1'>
                     <p className='text-2xl font-semibold text-white'>{name}</p>
@@ -44,7 +44,7 @@ const Partner = ({user}) => {
 
             <div>
                 
-                <Link to={`/Profile/${_id}`} className="btn w-full linear-bg text-white text-xl font-bold rounded-lg border-0">View Profile</Link>
+                <Link to={`/Profile/${_id}`} onClick={() => window.scrollTo(0, 0)} className="btn w-full linear-bg text-white text-xl font-bold rounded-lg border-0">View Profile</Link>
             </div>
 
 
